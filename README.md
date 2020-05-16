@@ -10,6 +10,17 @@ Install the following python packages via `pip install --user package_name`.
 * google-auth-httplib2 
 * google-auth-oauthlib
 * urllib
+* flask
+* flask-socketio
 
-## Goals
-TBA
+## Usage
+Run the server via `python server.py`.
+
+Server will be run on [the default local host at port 5000.](https://127.0.0.1:5000)
+
+## Todo
+|Goal|Additional Description|
+|----|----------------------|
+|Asynchrounous updates|Webpage updates on its own without need to refresh browser upon new quotes|
+|Text orientation|Finds the clearest position of the background to display text at|
+|True Quote of the Day|Pseudorandomness based on the date|

@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup, NavigableString
 import requests, random, json
 from googleapiclient.discovery import build
-import urllib.request
 
 # HTML Element Constants
 QUOTE_TAG = "div"
@@ -30,25 +29,34 @@ content = BeautifulSoup(response.content, "html.parser")
 DEVELOPER_KEY = "AIzaSyCo3KuiiDCvdoHo2nIGbOzjhHO8k1eyCDg"
 CX_ID = "016656735448507306327:vgjz9dha2wj"
 
-# Image 
+# Image
 FAILSAFE_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/7/70/Solid_white.svg"
 
-# Search Google custom search for a picture relating to image topic and save in images/
-def download_image(image_topic):
+# Search Google custom search for a picture relating to image topic and saves link
+def save_link(image_topic):
     service = build("customsearch", "v1", developerKey=DEVELOPER_KEY)
-    res = service.cse().list(
-        q = image_topic,
-        cx = CX_ID,
-        searchType='image',
-        num=1,
-        fileType='png',
-        safe= 'off'
-    ).execute()
-    for item in res['items']: # TODO: Figure a better way to parse res that doesn't require a loop
-        try:
-            urllib.request.urlretrieve(item['link'], "static/images/quote_bg.png")
-        except:
-            urllib.request.urlretrieve(FAILSAFE_IMAGE, "static/images/quote_bg.png")
+    res = (
+        service.cse()
+        .list(
+            q=image_topic,
+            cx=CX_ID,
+            searchType="image",
+            num=1,
+            fileType="png",
+            # imgSize='LARGE',
+            safe="off",
+        )
+        .execute()
+    )
+    for item in res[
+        "items"
+    ]:  # TODO: Figure a better way to parse res that doesn't require a loop
+        with open("image_url.txt", "w+") as outfile:
+            outfile.seek(0)
+            outfile.truncate()
+            outfile.write(item["link"])
+            outfile.close()
+
 
 class Quote:
     def __init__(self, text, author, title, tags, likes):
@@ -61,10 +69,15 @@ class Quote:
     def __repr__(self):
         return f"{self.text} — {self.author}, {self.title}\n Tags: {self.tags}\n {self.likes} have liked this\n\n"
 
+
 def main(args=""):
     quote_arr = []
-    for quote in content.find_all(QUOTE_TAG, attrs={ATTRIBUTE_NAME: QUOTE_ATTRIBUTE_VALUE}):
-        quote_contents = quote.find(TEXT_TAG, attrs={ATTRIBUTE_NAME: TEXT_ATTRIBUTE_VALUE})
+    for quote in content.find_all(
+        QUOTE_TAG, attrs={ATTRIBUTE_NAME: QUOTE_ATTRIBUTE_VALUE}
+    ):
+        quote_contents = quote.find(
+            TEXT_TAG, attrs={ATTRIBUTE_NAME: TEXT_ATTRIBUTE_VALUE}
+        )
         text = ""
         for c in quote_contents:
             # Emdash = end of quote
@@ -82,7 +95,8 @@ def main(args=""):
             quote.find(
                 TITLE_TAG, attrs={ATTRIBUTE_NAME: TITLE_ATTRIBUTE_VALUE}
             ).text.strip()
-            if quote.find(TITLE_TAG, attrs={ATTRIBUTE_NAME: TITLE_ATTRIBUTE_VALUE}) != None
+            if quote.find(TITLE_TAG, attrs={ATTRIBUTE_NAME: TITLE_ATTRIBUTE_VALUE})
+            != None
             else ""
         )
 
@@ -109,12 +123,12 @@ def main(args=""):
             .text.strip()
             .rstrip(" likes"),
         )
-        
+
         quote_arr.append(quoteObject)
 
     random_quote = quote_arr[random.randrange(0, len(quote_arr) - 1)]
     print(repr(random_quote))
-    with open('QuoteData.json', 'w+') as outfile:
+    with open("QuoteData.json", "w+") as outfile:
         json.dump(random_quote.__dict__, outfile)
         outfile.close()
 
@@ -125,4 +139,4 @@ def main(args=""):
         else "white"
     )
     print(image_topic)
-    download_image(image_topic) 
+    save_link(image_topic)

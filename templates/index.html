@@ -5,30 +5,40 @@
 	<title>Quote of the Day</title>
 	<meta charset=utf-8>
 </head>
+<style>
+	body {
+	  background-image: url("{{ url }}");
+	  background-repeat: no-repeat;
+  	background-attachment: fixed;
+  	background-size: 100% 100%;
+	}
+</style>
 <body>
-	<style>
-		body {
-		  background-image: url('/static/images/quote_bg.png');
-		}
-		</style>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='skyblue.css') }}">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type=text/javascript>
-			$(function() {
-			  $('a#test').bind('click', function() {
-				$.getJSON('/background_process',
-					function(data) {
-				  //do nothing
-				});
-				return false;
-			  });
-			});
-	</script>
-	
-		<form>
-			<a href=# id=test><button class='btn btn-default'>New Quote!</button></a>
-		</form>
-	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	<div class="column">
+		<div class="border">
+			<div class="box">
+			<div class="textbox">
+				<h1>{{ text }}</h1>
+				<h2>—&nbsp;{{ author }}<br>&emsp;{{ title }}</h2>
+				<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+				<script type=text/javascript>
+						$(function() {
+						  $('a#test').bind('click', function() {
+							$.getJSON('/background_process',
+								function(data) {
+							  //do nothing
+							});
+							return false;
+						  });
+						});
+				</script>
+				<form>
+					<a href=# id=test><button class='btn btn-default'>New Quote!</button></a>
+				</form>
+			</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

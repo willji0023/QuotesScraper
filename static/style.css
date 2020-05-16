@@ -1,0 +1,44 @@
+body {
+    text-align: justify;
+}
+
+h1 {
+	color: white;
+	font-size: 30px;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	font-family: 'URW Chancery L', cursive
+}
+h2 {
+	color: white;
+	font-size: 20px;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+div.column {
+    width: 35em;
+    margin: 2% auto;
+}
+
+div.border {
+    vertical-align: middle;
+    margin-top: 200px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(45,45,45);
+
+    background-color: hsla(241, 100%, 50%, 0.3);
+
+    z-index: 5;
+}
+
+div.box {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(70,70,70);
+}
+
+div.textbox {
+    margin: 2.2em;
+    margin-top: 2%;
+}
