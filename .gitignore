@@ -1,2 +1,4 @@
 *.json
-__pycache__
+__pycache__/
+quote_bg.png
+
