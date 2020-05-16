@@ -46,9 +46,9 @@ def download_image(image_topic):
     ).execute()
     for item in res['items']: # TODO: Figure a better way to parse res that doesn't require a loop
         try:
-            urllib.request.urlretrieve(item['link'], "images/quote_bg.png")
+            urllib.request.urlretrieve(item['link'], "static/images/quote_bg.png")
         except:
-            urllib.request.urlretrieve(FAILSAFE_IMAGE, "images/quote_bg.png")
+            urllib.request.urlretrieve(FAILSAFE_IMAGE, "static/images/quote_bg.png")
 
 class Quote:
     def __init__(self, text, author, title, tags, likes):
