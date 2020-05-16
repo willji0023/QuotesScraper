@@ -1,0 +1,29 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>Quote of the Day</title>
+	<meta charset=utf-8>
+</head>
+<body>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='skyblue.css') }}">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type=text/javascript>
+			$(function() {
+			  $('a#test').bind('click', function() {
+				$.getJSON('/background_process',
+					function(data) {
+				  //do nothing
+				});
+				return false;
+			  });
+			});
+	</script>
+	
+		<form>
+			<a href=# id=test><button class='btn btn-default'>New Quote!</button></a>
+		</form>
+	
+	</div>
+</body>
+</html>
