@@ -17,7 +17,13 @@ def json_to_dict(path):
 # Create a URL route in our application for "/"
 @app.route("/")
 def index():
-    quote_data = json_to_dict("QuoteData.json")
+    quote_data = None
+    while quote_data is None:
+        try: 
+            quote_data = json_to_dict("QuoteData.json")
+        except ValueError:  # includes simplejson.decoder.JSONDecodeError
+            webscraper.main()
+            print("Decoding JSON has failed")
     image_url = (
         open("image_url.txt", "r").read()
         if path.exists("image_url.txt")
